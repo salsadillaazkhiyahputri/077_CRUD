@@ -45,32 +45,33 @@ app.post('/api/users', (req, res) => {
     const {nama, nim, kelas} = req.body;
 
     if (!nama || !nim || !kelas){
-        return req.status(400).json({message:'nama, nim, kelas wajin diisi'});
+        return req.status(400).json({message:'nama, nim, kelas wajib diisi'});
     }
 
-db.query(
-    'INSERT INTO mahasiswa (nama, nim, kelas) VALUES (?,?,?)',
-    [nama, nim, kelas],
-    (err, results) => {
-        if(err){
-            console.error(err);
-            return res.status(500).json({message : 'Database Error'});
+    db.query(
+        'INSERT INTO mahasiswa (nama, nim, kelas) VALUES (?,?,?)',
+        [nama, nim, kelas],
+        (err, results) => {
+            if(err){
+                console.error(err);
+                return res.status(500).json({message : 'Database Error'});
+            }
+
+            res.status(201).json({message : 'User Created successfully'});
         }
+    );
 
-        res.status(201).json({message : 'User Created successfully'});
-    }
-);
 });
 
 app.put('/api/users/:id', (req, res)=>{
     const userId = req.params.id;
     const {nama, nim, kelas} = req.body;
     db.query(
-        'UPDATE mahasiswa SET nama = ?, nim = ?, kelas = ?, WHERE id = ? ',
-        [nama, nim,  kelas,UserId],
+        'UPDATE mahasiswa SET nama = ?, nim = ?, kelas = ? WHERE id = ? ',
+        [nama, nim,  kelas,userId],
         (err, results) => {
             if (err) {
-                console.err(err);
+                console.error(err);
                 return res.status(500).json({message: 'Database Error' });
             }
             res.json({message: 'User updated successfully!'});
@@ -80,13 +81,12 @@ app.put('/api/users/:id', (req, res)=>{
 
 app.delete('/api/users/:id', (req, res)=>{
     const userId = req.params.id;
-    const {nama, nim, kelas} = req.body;
-    db.query(' DELETE FROM mahasiswa WHERE id = ?' [userID],(err, reults) =>{
+    db.query(' DELETE FROM mahasiswa WHERE id = ?', [userId],(err, results) =>{
         if (err) {
                 console.error(err);
                 return res.status(500).json({message: 'Database Error' });
             }
-             res.json({message: 'User updated successfully!'});
+             res.json({message: 'User deleted successfully!'});
         }
     );
 });
