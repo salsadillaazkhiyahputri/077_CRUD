@@ -21,3 +21,13 @@ const db mysql.createConnection({
     port: 3308
 })
 
+db.connect((err) => {
+  if (err) {
+    console.error('Error connecting to MySQL: ' + err.stack);
+    return;
+  }
+  console.log('Connected to MySQL as id ' + db.threadId);
+});
+
+
+
