@@ -26,7 +26,7 @@ db.connect((err) => {
     console.error('Error connecting to MySQL: ' + err.stack);
     return;
   }
-  console.log('Connected to MySQL as id ' + db.threadId);
+  console.log('Connection Successfully');
 });
 
 
