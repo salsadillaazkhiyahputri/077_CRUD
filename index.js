@@ -49,7 +49,7 @@ app.post('/api/users', (req, res) => {
     }
 
 db.query(
-    'INSERT INTO mahasiswa (nim, nama, kelas) VALUES (?,?,?)',
+    'INSERT INTO mahasiswa (nama, nim, kelas) VALUES (?,?,?)',
     [nama, nim, kelas],
     (err, results) => {
         if(err){
